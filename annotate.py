@@ -146,6 +146,10 @@ def annotate_tracks(TD, frame_length):
         's':    Pressing the 's' key halves frame_length (effectively
                 halving the speed at which data is displayed). Use this to
                 slow down where accurate tracking is required.
+
+        'q':    Pressing the 'q' key allows for termination of the playback 
+                before the end of the data that is displayed. Use this to 
+                stop early 
                 
         Mouse:  Clicking and holding down the left-hand button of the mouse
                 initiates tracking and saves a trackpoint at the location of the
@@ -237,6 +241,11 @@ def annotate_tracks(TD, frame_length):
             tmin = frame_ts
             n_frames = frame_num + np.ceil((tmax-tmin)/frame_length)
   
+        if(key == ord('q')):
+            print 'Stopping Early'
+            frame_num = n_frames
+            break
+
         frame_num += 1
 
     valid_points = np.where((trackpoints_x >= 0) & (trackpoints_y >= 0) & (trackpoints_x <= TD.width) & (trackpoints_y <= TD.height))
@@ -428,7 +437,7 @@ def main():
     will result in them being considered as new files in need of annotation.
     """
 
-    input_folder = 'C:\Input_Recordings'
+    input_folder = 'C:\Input_Recordings' 
     output_folder = 'C:\Output_Tracks'
     state_file_name = 'annotation_state.pkl'
 
